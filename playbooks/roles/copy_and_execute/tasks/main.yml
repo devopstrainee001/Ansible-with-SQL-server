@@ -1,0 +1,26 @@
+---
+    - name: copying file
+      win_copy:
+        src: /home/centos/sql/playbooks/roles/copy_and_execute/files/{{ item }}
+        dest: C:\Users\Administrator\Desktop\task\{{ item }}
+        owner: centos
+        group: centos
+        mode: 0644
+      with_items: "{{ filenames_to_copy.split(',') }}"
+
+    - name: Print a message
+      debug:
+        msg: "########## Copied Successfully ##########"
+
+    - name: Executing SQL Files
+      win_command: sqlcmd -S EC2AMAZ-C0IRCFH -i "C:\Users\Administrator\Desktop\task\{{ item }}"
+      register: sqlcmd_out
+      with_items: "{{ filenames_to_execute.split(',') }}"
+
+    - name : Print a message
+      debug:
+        msg: "######## The output is {{ sqlcmd_out }}"
+
+    - name: Print a message
+      debug:
+        msg: "########## Exxecuted Successfully ##########"

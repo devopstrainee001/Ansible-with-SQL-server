@@ -1,0 +1,5 @@
+---
+- name: SQL Server
+  hosts: winhost
+  roles:
+    - copy_and_execute

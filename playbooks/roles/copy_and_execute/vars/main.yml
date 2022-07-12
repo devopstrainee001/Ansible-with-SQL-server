@@ -1,8 +1,15 @@
 ---
 #- hosts: all
 #  vars:
-filenames_to_copy: "CommandLog-01.sql,CommandExecute-02.sql,DatabaseIntegrityCheck-03.sql"
-filenames_to_execute: "CommandExecute-02.sql" 
-path_to_file: /home/centos/sql/playbooks/roles/copy_and_execute/files/
+filenames_to_copy: "CommandLog-01.sql,CommandExecute-02.sql,DatabaseIntegrityCheck-03.sql,IndexOptimize-04.sql"
+#filenames_to_copy: ""
+
+filenames_to_execute: "CommandLog-01.sql,CommandExecute-02.sql,DatabaseIntegrityCheck-03.sql,IndexOptimize-04.sql"
+#filenames_to_execute: ""
 destination_path: C:\Users\Administrator\Desktop\task\
-version: 2.7.5
+
+
+#Databases
+
+data_base: master
+

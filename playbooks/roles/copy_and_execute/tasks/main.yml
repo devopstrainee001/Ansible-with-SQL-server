@@ -1,11 +1,9 @@
----
-    - name: copying file
-      win_copy:
-        src: "{{ path_to_file }}{{ item }}"
+--- 
+    - name: Copying sql files Using Jinja Template
+      template:
+        src: "{{ item }}.j2"
         dest: "{{ destination_path }}{{ item }}"
-        owner: centos
-        group: centos
-        mode: 0644
+      when: item | length > 0
       with_items: "{{ filenames_to_copy.split(',') }}"
 
     - name: Print a message
@@ -26,7 +24,3 @@
       debug:
         msg: "########## Exxecuted Successfully ##########"
 
-    - name: Use of Jinja Template
-      template:
-        src: version.config.j2
-        dest: "{{ destination_path }}version.config.txt"

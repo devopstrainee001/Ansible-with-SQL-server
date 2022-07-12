@@ -1,8 +1,8 @@
 ---
     - name: copying file
       win_copy:
-        src: /home/centos/sql/playbooks/roles/copy_and_execute/files/{{ item }}
-        dest: C:\Users\Administrator\Desktop\task\{{ item }}
+        src: "{{ path_to_file }}{{ item }}"
+        dest: "{{ destination_path }}{{ item }}"
         owner: centos
         group: centos
         mode: 0644
@@ -13,10 +13,11 @@
         msg: "########## Copied Successfully ##########"
 
     - name: Executing SQL Files
-      win_command: sqlcmd -S EC2AMAZ-C0IRCFH -i "C:\Users\Administrator\Desktop\task\{{ item }}"
+      win_command: sqlcmd -i "{{ destination_path }}{{ item }}"
       register: sqlcmd_out
+      when: item | length > 0 
       with_items: "{{ filenames_to_execute.split(',') }}"
-
+    
     - name : Print a message
       debug:
         msg: "######## The output is {{ sqlcmd_out }}"
@@ -24,3 +25,8 @@
     - name: Print a message
       debug:
         msg: "########## Exxecuted Successfully ##########"
+
+    - name: Use of Jinja Template
+      template:
+        src: version.config.j2
+        dest: "{{ destination_path }}version.config.txt"
